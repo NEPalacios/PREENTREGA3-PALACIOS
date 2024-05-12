@@ -1,0 +1,20 @@
+{% extends './template.html' %}
+
+{% block content %}
+<h2 class=" text-center ">EDITAR</h2>
+<form class="w-50  shadow mx-auto  p-4  m-3 text-center  " method="POST" action="{% url 'tienda:editar' producto.id %}">
+    {% csrf_token %}
+    <!-- id oculto -->
+    <input type="hidden" name="id" value="{{producto.id}}">
+    Nombre: <input type="text" name="nombre" class="form-control  my-1" required value="{{producto.nombre}}">
+
+    Precio: <input type="number" name="precio" class="form-control my-1" required value="{{producto.precio}}">
+
+    Descripcion:
+    <textarea name="descripcion" class="form-control  my-1">
+    {{producto.descripcion}}
+    </textarea>
+
+    <input type="submit" value="Actualizar" class=" btn btn-warning  ">
+</form>
+{% endblock content %}
