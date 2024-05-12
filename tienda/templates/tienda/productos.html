@@ -8,17 +8,12 @@
 {% endif %}
 
 <!-- ALTA DE PRODUCTO -->
-<h2 class="text-center ">PRODUCTOS</h2>
+<h2 class="text-center ">LISTADO Y ABM DE PRODUCTOS</h2>
 <form class="w-50  shadow mx-auto  p-4  m-3 text-center " method="POST" action="./guardar">
     {% csrf_token %}
     Nombre: <input type="text" name="nombre" class="form-control  my-1" required>
-
     Precio: <input type="number" name="precio" class="form-control my-1" required>
-
-    Descripcion:
-    <textarea name="descripcion" class="form-control  my-1 ">
-    </textarea>
-
+    Descripcion:<textarea name="descripcion" class="form-control  my-1 "></textarea>
     <input type="submit" value="Guardar" class=" btn btn-primary ">
 </form>
 
