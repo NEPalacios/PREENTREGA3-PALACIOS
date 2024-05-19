@@ -32,12 +32,13 @@
         <td>
             <ul>
                 {% for producto in pedido.productos.all %}
-                <li>{{ producto.nombre }}</li>
+                <li>
+                    <strong>{{ producto.nombre }}</strong>: {{ producto.descripcion }}
+                </li>
                 {% endfor %}
             </ul>
         </td>
         <td>
-            
             <!-- BOTONES DE ELIMINAR/EDITAR -->
             <form action="{% url 'tienda:pedidos_eliminar' pedido.id %}" method="post" style="display: inline;">
                 {% csrf_token %}
@@ -54,5 +55,6 @@
     </tr>
     {% endfor %}
 </table>
+
 
 {% endblock content %}
