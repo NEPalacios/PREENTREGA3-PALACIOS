@@ -1,30 +1,29 @@
-body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-image: url('background.jpg'); /* Cambia 'background.jpg' por la imagen de fondo que desees */
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.body{
+    
+}
+.overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Opacidad del fondo borroso */
+    backdrop-filter: blur(8px); /* Ajusta el valor para el grado de desenfoque */
+    z-index: 1;
 }
 
 .container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Opacidad del fondo borroso */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    
+    margin-top: 50px; /* Ajusta según sea necesario */
+    position: relative;
+    z-index: 2;
+    width: 300px; /* Ancho del cuadro de inicio de sesión */
+    margin: auto; /* Centrar el cuadro de inicio de sesión */
 }
 
 .login-box {
-    width: 300px;
     padding: 40px;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.8); /* Color de fondo transparente */
     border-radius: 10px;
     text-align: center;
 }
