@@ -3,7 +3,7 @@
 {% block content %}
 <h2 class=" text-center ">EDITAR PRODUCTO</h2>
 <form class="w-50  shadow mx-auto  p-4  m-3 text-center  " method="POST" 
-action="{% url 'tienda:editar' producto.id %}">
+action="{% url 'tienda:productos_editar' producto.id %}">
     {% csrf_token %}
     <!-- id oculto -->
     <input type="hidden" name="id" value="{{producto.id}}">

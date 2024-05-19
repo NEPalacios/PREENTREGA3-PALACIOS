@@ -11,7 +11,7 @@
 <h2 class="text-center">LISTADO Y ABM DE CLIENTES</h2>
 <form class="w-50 shadow mx-auto p-4 m-3 text-center" method="POST" action="{% url 'tienda:cliente_create' %}">
     {% csrf_token %}
-    Nombre: <input type="text" name="nombre" class="form-control my-1" required>
+    Nombre del cliente: <input type="text" name="nombre" class="form-control my-1" required>
     Email: <input type="email" name="email" class="form-control my-1" required>
     Teléfono: <input type="tel" name="telefono" class="form-control my-1" required>
     <input type="submit" value="Guardar" class="btn btn-primary">

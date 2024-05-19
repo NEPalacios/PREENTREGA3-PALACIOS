@@ -1,0 +1,10 @@
+{% extends './template.html' %}
+
+{% block content %}
+<h2 class="text-center">EDITAR PEDIDOS</h2>
+<form class="w-50 shadow mx-auto p-4 m-3 text-center" method="POST" action="{% url 'tienda:pedidos_editar' pedido.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Actualizar" class="btn btn-warning">
+</form>
+{% endblock content %}
