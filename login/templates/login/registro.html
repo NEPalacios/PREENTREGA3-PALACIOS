@@ -1,0 +1,13 @@
+{% extends 'tienda/template.html' %}
+{% block content %}
+<title>REGISTRO</title>
+<h2>REGISTRO DE USUARIO</h2>
+<form action="" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit"  value="Registrarse" >
+        {% if error %}
+            <h3>{{error}}</h3>
+        {% endif %}
+</form>
+{% endblock content %}

@@ -4,4 +4,6 @@ app_name="login"
 
 urlpatterns = [
     path("iniciar/", views.iniciar, name="iniciar"),
+    path("registro/", views.registro, name="registro"),
+
 ]
