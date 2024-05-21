@@ -1,5 +1,11 @@
 # ' Pagina de inicio con:'
-    - Principal o index (vacio).
+    -'INICIO DE SESION':
+        -Pantalla para iniciar sesion o registrarse:
+            -Mensaje de aviso si usuario y/o contraseña no coinciden para Login.
+            (Si el inicio es exitoso entonces se tiene acceso al Index)
+            -el Registro de Usuario busca un nombre de usuario unico, y que las contraseñas sean iguales para dar de alta.
+
+    - 'Index':
 
     - 'PRODUCTOS':
         - 'Formulario listo para dar de Alta.
@@ -18,3 +24,8 @@
         - Edicion de clientes.
             > Desde otra plantilla permite editar: nombre, email y telefono. (Los tres son obligatorios.)
         - Buscador.
+
+    -'PEDIDOS':
+    -Formulario listo para tomar pedidos en base de los clientes y productos registrados en la base de datos.
+
+   
