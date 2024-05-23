@@ -1,13 +1,68 @@
 {% extends 'tienda/template.html' %}
+{% load static %}
 {% block content %}
-<title>REGISTRO</title>
-<h2>REGISTRO DE USUARIO</h2>
-<form action="" method="post">
-    {% csrf_token %}
-    {{form.as_p}}
-    <input type="submit"  value="Registrarse" >
-        {% if error %}
-            <h3>{{error}}</h3>
-        {% endif %}
-</form>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>REGISTRO</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <style>
+        .register-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .register-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .register-form .form-group {
+            margin-bottom: 15px;
+        }
+
+        .register-form input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .register-form input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container register-container">
+        <h2 class="register-title">Registro de Usuario</h2>
+        <form class="register-form" action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Registrarse">
+            {% if error %}
+            <div class="error-message">
+                <h3>{{ error }}</h3>
+            </div>
+            {% endif %}
+        </form>
+    </div>
+</body>
+
+</html>
 {% endblock content %}

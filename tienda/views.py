@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from tienda.models import Productos, Clientes, Pedidos
 from django.contrib import messages
-
+from django.contrib.auth.decorators import login_required
 from .forms import PedidosForm
 
 # Create your views here.
@@ -11,7 +11,7 @@ from .forms import PedidosForm
 def index(request):
     return render(request, "tienda/index.html")
 
-
+@login_required
 def productos_consultar(request):
     # buscador y mostrar toda la base de datos
     busqueda = request.GET.get("busqueda", None)
@@ -22,7 +22,7 @@ def productos_consultar(request):
         productos = Productos.objects.all()
     return render(request, "tienda/productos.html", {"productos": productos})
 
-
+@login_required
 def productos_guardar(request):
     nombre = request.POST["nombre"]
     precio = request.POST["precio"]
@@ -36,20 +36,20 @@ def productos_guardar(request):
     # para redirigir a la vista 'consultar'
     return redirect("tienda:productos_consultar")
 
-
+@login_required
 def productos_eliminar(request, id):
     producto = Productos.objects.filter(pk=id)
     producto.delete()
     messages.success(request, "Producto eliminado")
     return redirect("tienda:productos_consultar")
 
-
+@login_required
 # mostrar en detalles y modificar un producto
 def productos_detalle(request, id):
     producto = Productos.objects.get(pk=id)
     return render(request, "tienda/productoEditar.html", {"producto": producto})
 
-
+@login_required
 def productos_editar(request, id):
     nombre = request.POST["nombre"]
     precio = request.POST["precio"]
@@ -67,7 +67,7 @@ def productos_editar(request, id):
 CLIENTE CLIENTE CLIENTE CLIENTE CLIENTE CLIENTE 
 """
 
-
+@login_required
 def cliente_consultar(request):
     # buscador y mostrar toda la base de datos
     busqueda = request.GET.get("busqueda", None)
@@ -78,7 +78,7 @@ def cliente_consultar(request):
         clientes = Clientes.objects.all()
     return render(request, "tienda/cliente.html", {"clientes": clientes})
 
-
+@login_required
 def cliente_create(request):  # guardar
     # if request.method == "POST":
     nombre = request.POST["nombre"]
@@ -90,20 +90,20 @@ def cliente_create(request):  # guardar
     # Redirigir a la vista de lista clientes
     return redirect("tienda:cliente_consultar")
 
-
+@login_required
 def cliente_eliminar(request, id):
     cliente = Clientes.objects.filter(pk=id)
     cliente.delete()
     messages.success(request, "Cliente eliminado")
     return redirect("tienda:cliente_consultar")
 
-
+@login_required
 # mostrar en detalles y modificar un cliente
 def cliente_detalle(request, id):
     cliente = Clientes.objects.get(pk=id)
     return render(request, "tienda/clienteEditar.html", {"cliente": cliente})
 
-
+@login_required
 def cliente_editar(request, id):
     nombre = request.POST["nombre"]
     email = request.POST["email"]
@@ -117,13 +117,13 @@ def cliente_editar(request, id):
 
 # PEDIDOS PEDIDOS PEDIDOS
 
-
+@login_required
 def pedidos_consultar(request):
     pedidos = Pedidos.objects.all()
     form = PedidosForm()
     return render(request, "tienda/pedidos.html", {"pedidos": pedidos})
 
-
+@login_required
 def pedidos_create(request):
     if request.method == "POST":
         form = PedidosForm(request.POST)
@@ -140,14 +140,14 @@ def pedidos_create(request):
         form = PedidosForm()
     return render(request, "tienda/pedidos.html", {"form": form})
 
-
+@login_required
 def pedidos_eliminar(request, id):
     pedido = get_object_or_404(Pedidos, pk=id)
     pedido.delete()
     messages.success(request, "Pedido eliminado")
     return redirect("tienda:pedidos_consultar")
 
-
+@login_required
 def pedidos_detalle(request, id):
     pedido = get_object_or_404(Pedidos, pk=id)
     form = PedidosForm(
@@ -157,7 +157,7 @@ def pedidos_detalle(request, id):
         request, "tienda/pedidosEditar.html", {"form": form, "pedido": pedido}
     )
 
-
+@login_required
 def pedidos_editar(request, id):
     pedido = get_object_or_404(Pedidos, pk=id)
     if request.method == "POST":
