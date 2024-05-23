@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 
 # def iniciar(request):
@@ -26,14 +27,10 @@ def iniciar(request):
         password = request.POST["password"]
         user = authenticate(username=name, password=password)
         if user is None:
-            return render(
-                request,
-                "login/iniciar.html",
-                {
-                    "form": AuthenticationForm,
-                    "error": "Nombre de usuario o contraseña incorrectos",
-                },
-            )
+            return render(request,"login/iniciar.html",{"form": AuthenticationForm, "error": "Nombre de usuario o contraseña incorrectos",})
+        else:
+            login(request,user)
+            return render(request, "tienda/index.html")
 
 
 def registro(request):
@@ -64,3 +61,8 @@ def registro(request):
                         "error": "El nombre de usuario ya existe",
                     },
                 )
+
+
+def salir(request):
+    logout(request)
+    return render(request, "tienda/index.html")
