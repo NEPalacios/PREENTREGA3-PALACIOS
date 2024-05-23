@@ -16,12 +16,13 @@
         <form action="" method="post">
             <div class="textbox">
                 {% csrf_token %}
-                <input type="text" placeholder="Usuario" name="username" required>
+                <!-- <input type="text" placeholder="Usuario" name="username" required>
             </div>
             <div class="textbox">
                 <input type="password" placeholder="Contraseña" name="password" required>
-            </div>
-            <input type="submit" class="btn" value="Iniciar Sesión">
+            </div>-->
+            {{form.as_p}}
+            <input type="submit" class="btn" value="Iniciar Sesión"> 
         </form>
     </div>
     {% if error %}
