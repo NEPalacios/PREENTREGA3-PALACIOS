@@ -9,8 +9,9 @@
 
 <!-- EDITAR PERFIL DEL USUARIO -->
 <h2 class="text-center">EDITAR PERFIL</h2>
-<form class="w-50 shadow mx-auto p-4 m-3 text-center" method="POST" action="">
+<form class="w-50 shadow mx-auto p-4 m-3 text-center" method="POST" action="{% url 'login:usuario_editar' %}">
     {% csrf_token %}
+    
     {{ form.as_p }}
     <input type="submit" value="Actualizar" class="btn btn-warning">
 </form>

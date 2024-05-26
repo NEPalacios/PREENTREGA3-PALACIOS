@@ -60,7 +60,7 @@ def salir(request):
     return redirect('tienda:index')
 
 @login_required
-def usuario_perfil(request):
+def usuario_detalle(request):
     try:
         usuario = Usuario.objects.get(username=request.user.username)
     except Usuario.DoesNotExist:
@@ -69,7 +69,7 @@ def usuario_perfil(request):
     return render(request, 'login/usuario.html', {'usuario': usuario})
 
 @login_required
-def editar_usuario(request):
+def usuario_editar(request):
     try:
         usuario = Usuario.objects.get(username=request.user.username)
     except Usuario.DoesNotExist:
@@ -80,7 +80,7 @@ def editar_usuario(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Perfil actualizado con éxito')
-            return redirect('login:usuario_perfil')
+            return redirect('login:usuario_detalle')
         else:
             messages.error(request, 'Error al actualizar el perfil')
     else:
