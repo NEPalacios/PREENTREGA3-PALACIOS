@@ -4,34 +4,22 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-
-# def iniciar(request):
-#     if request.method == "POST":
-#         username = request.POST['username']
-#         password = request.POST['password']
-#         user = authenticate(request, username=username, password=password)
-#         if user is not None:
-#             login(request, user)
-#             return redirect('tienda:index')
-#         else:
-#             return render(request, "login/iniciar.html", {"error": "Nombre de usuario o contraseña incorrectos"})
-#     else:
-#         return render(request, "login/iniciar.html")
-
+from django.contrib import messages 
+from .forms import UsuarioForm
+from .models import Usuario
 
 def iniciar(request):
     if request.method == "GET":
-        return render(request, "login/iniciar.html", {"form": AuthenticationForm})
+        return render(request, "login/iniciar.html", {"form": AuthenticationForm()})
     else:
         name = request.POST["username"]
         password = request.POST["password"]
         user = authenticate(username=name, password=password)
         if user is None:
-            return render(request,"login/iniciar.html",{"form": AuthenticationForm, "error": "Nombre de usuario o contraseña incorrectos",})
+            return render(request, "login/iniciar.html", {"form": AuthenticationForm(), "error": "Nombre de usuario o contraseña incorrectos"})
         else:
-            login(request,user)
-            return render(request, "tienda/index.html")
-
+            login(request, user)
+            return redirect('tienda:index')
 
 def registro(request):
     if request.method == "GET":
@@ -50,8 +38,13 @@ def registro(request):
                     password=request.POST["password1"],
                 )
                 user.save()
+                Usuario.objects.create(
+                    username=user.username,
+                    nombres=request.POST.get("nombres", ""),
+                    apellido=request.POST.get("apellido", "")
+                )
                 login(request, user)
-                return redirect("tienda:index")
+                return redirect('tienda:index')
             except IntegrityError:
                 return render(
                     request,
@@ -62,7 +55,24 @@ def registro(request):
                     },
                 )
 
-
 def salir(request):
     logout(request)
-    return render(request, "tienda/index.html")
+    return redirect('tienda:index')
+
+@login_required
+def usuario_perfil(request):
+    try:
+        usuario = Usuario.objects.get(username=request.user.username)
+    except Usuario.DoesNotExist:
+        usuario = None
+
+    if request.method == 'POST':
+        form = UsuarioForm(request.POST, instance=usuario)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Perfil actualizado con éxito')
+            return redirect('login:usuario_perfil')
+    else:
+        form = UsuarioForm(instance=usuario)
+
+    return render(request, 'login/usuario.html', {'form': form})
