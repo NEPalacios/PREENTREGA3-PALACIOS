@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.contrib import messages 
+from django.contrib import messages
 from .forms import UsuarioForm
 from .models import Usuario
 
@@ -66,13 +66,24 @@ def usuario_perfil(request):
     except Usuario.DoesNotExist:
         usuario = None
 
+    return render(request, 'login/usuario.html', {'usuario': usuario})
+
+@login_required
+def editar_usuario(request):
+    try:
+        usuario = Usuario.objects.get(username=request.user.username)
+    except Usuario.DoesNotExist:
+        usuario = None
+
     if request.method == 'POST':
         form = UsuarioForm(request.POST, instance=usuario)
         if form.is_valid():
             form.save()
             messages.success(request, 'Perfil actualizado con éxito')
             return redirect('login:usuario_perfil')
+        else:
+            messages.error(request, 'Error al actualizar el perfil')
     else:
         form = UsuarioForm(instance=usuario)
 
-    return render(request, 'login/usuario.html', {'form': form})
+    return render(request, 'login/editarUsuario.html', {'form': form})
