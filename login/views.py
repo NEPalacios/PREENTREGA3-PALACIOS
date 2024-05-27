@@ -63,6 +63,7 @@ def salir(request):
 def usuario_detalle(request):
     try:
         usuario = Usuario.objects.get(username=request.user.username)
+        print(usuario)
     except Usuario.DoesNotExist:
         usuario = None
 
@@ -72,11 +73,14 @@ def usuario_detalle(request):
 def usuario_editar(request):
     try:
         usuario = Usuario.objects.get(username=request.user.username)
+        print(request)
+        # print(usuario)
     except Usuario.DoesNotExist:
         usuario = None
 
     if request.method == 'POST':
         form = UsuarioForm(request.POST, instance=usuario)
+        print(form)
         if form.is_valid():
             form.save()
             messages.success(request, 'Perfil actualizado con éxito')
