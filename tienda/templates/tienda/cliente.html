@@ -36,7 +36,10 @@
     </tr>
     {% for cliente in clientes %}
     <tr>
-        <td>{{ cliente.nombre }}</td>
+        <td>
+            <span style="color: #000000;">{{ cliente.nombre }}</span>
+            <span style="color: #FF0000;"> (ID: {{ cliente.id }})</span>
+        </td>
         <td>{{ cliente.email }}</td>
         <td>{{ cliente.telefono }}</td>
         <td>

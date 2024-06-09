@@ -34,7 +34,12 @@
                         <a class="nav-link" href="{% url 'tienda:pedidos_consultar' %}">PEDIDOS</a>
                     </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'login:usuario_detalle' %}">{{ user.username }}</a>
+                            <a class="nav-link" href="{% url 'login:usuario_detalle' %}">
+                                <span style="color: #000000;"> | Usuario: </span>
+                                <span style="color: #0004ff;">{{ user.username }}</span>
+                                <span style="color: #000000;"> |</span>
+                            </a>
+                            
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'login:salir' %}">CERRAR SESIÓN</a>
