@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from django.contrib import messages
-from .forms import UsuarioForm
+from .forms import UsuarioForm, PasswordForm
 from .models import Usuario
 
 def iniciar(request):
@@ -91,3 +91,16 @@ def usuario_editar(request):
         form = UsuarioForm(instance=usuario)
 
     return render(request, 'login/editarUsuario.html', {'form': form})
+
+def password_editar(request):
+    if request.method == 'POST':
+        form = PasswordForm(request.POST)
+        if form.is_valid():
+            nueva_contraseña = form.cleaned_data['password']
+            usuario_actual = request.user
+            usuario_actual.password = nueva_contraseña
+            usuario_actual.save()
+            return redirect('perfil')
+    else:
+        form = PasswordForm()
+    return render(request, 'login/password_editar.html', {'form': form})

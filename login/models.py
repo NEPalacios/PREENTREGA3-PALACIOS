@@ -1,4 +1,5 @@
 from django.db import models
+from django import forms
 
 
 class Usuario(models.Model):
@@ -12,3 +13,5 @@ class Usuario(models.Model):
         return f'{self.nombres} {self.apellido}'
 
 
+class PasswordForm(forms.Form):
+    password = forms.CharField(max_length=50, widget=forms.PasswordInput)

@@ -2,9 +2,9 @@
 {% block content %}
 <!-- MENSAJES DE CONFIRMACION -->
 {% if messages %}
-    {% for message in messages %}
-        <div class="alert alert-success text-center">{{ message }}</div>
-    {% endfor %}
+{% for message in messages %}
+<div class="alert alert-success text-center">{{ message }}</div>
+{% endfor %}
 {% endif %}
 
 <!-- PERFIL DEL USUARIO -->
@@ -12,9 +12,14 @@
 
 <div class="w-50 shadow mx-auto p-4 m-3 text-center">
     <p>Nombre de usuario: {{ usuario.username }}</p>
-    <span class="form-control-color text-black-50">Datos personales:</span>
-    <p>Nombres: {{ usuario.nombres }}</p>
-    <p>Apellido: {{ usuario.apellido }}</p>
-    <a href="{% url 'login:usuario_editar' %}" class="btn btn-warning">Editar Perfil</a>
+    <a href="{% url 'login:password_editar' %}" class="btn btn-danger">Cambiar contraseña</a><br>
+
+    <div>
+        <br>
+        <span class="form-control-color text-black-50 ">Datos personales:</span>
+        <p>Nombres: {{ usuario.nombres }}</p>
+        <p>Apellido: {{ usuario.apellido }}</p>
+        <a href="{% url 'login:usuario_editar' %}" class="btn btn-warning">Editar Perfil</a>
+    </div>
 </div>
 {% endblock %}

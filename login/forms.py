@@ -8,3 +8,6 @@ class UsuarioForm(forms.ModelForm):
         widgets = {
             'password': forms.PasswordInput(),
         }
+
+class PasswordForm():
+    password = forms.CharField(max_length=50, widget=forms.PasswordInput)
