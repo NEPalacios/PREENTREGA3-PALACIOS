@@ -5,8 +5,10 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
-from .forms import UsuarioForm, PasswordForm
+from .forms import UsuarioForm, PasswordForm, AvatarForm
 from .models import Usuario
+from django.http import HttpResponse
+
 
 def iniciar(request):
     if request.method == "GET":
@@ -104,3 +106,13 @@ def password_editar(request):
     else:
         form = PasswordForm()
     return render(request, 'login/password_editar.html', {'form': form})
+
+def avatar_image_view(request):
+    if request.method == 'POST':
+        form = AvatarForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('tienda:index')
+    else:
+        form = AvatarForm()
+    return render(request, 'login/avatar_image_upload.html', {'form': form})

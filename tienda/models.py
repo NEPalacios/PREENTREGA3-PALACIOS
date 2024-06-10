@@ -21,7 +21,5 @@ class Clientes(models.Model):
 
 
 class Pedidos(models.Model):
-    cliente = models.ForeignKey(
-        Clientes, on_delete=models.SET_NULL, null=True, blank=True
-    )
+    cliente = models.ForeignKey(Clientes, on_delete=models.CASCADE)
     productos = models.ManyToManyField(Productos)

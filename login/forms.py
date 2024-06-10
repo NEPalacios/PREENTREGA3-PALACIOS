@@ -1,13 +1,21 @@
 from django import forms
-from .models import Usuario
+from .models import Usuario, Avatar
+
 
 class UsuarioForm(forms.ModelForm):
     class Meta:
         model = Usuario
-        fields = ['nombres', 'apellido']
+        fields = ["nombres", "apellido"]
         widgets = {
-            'password': forms.PasswordInput(),
+            "password": forms.PasswordInput(),
         }
 
-class PasswordForm():
+
+class PasswordForm:
     password = forms.CharField(max_length=50, widget=forms.PasswordInput)
+
+
+class AvatarForm(forms.ModelForm):
+    class Meta:
+        model = Avatar
+        fields = ["name", "avatar_Main_Img"]
