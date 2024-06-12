@@ -18,4 +18,4 @@ class PasswordForm:
 class AvatarForm(forms.ModelForm):
     class Meta:
         model = Avatar
-        fields = ["name", "avatar_Main_Img"]
+        fields = ["nombre_de_imagen", "avatar_Main_Img"]

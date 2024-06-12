@@ -17,5 +17,5 @@ class PasswordForm(forms.Form):
 
 
 class Avatar(models.Model):
-    name = models.CharField(max_length=50)
+    nombre_de_imagen = models.CharField(max_length=50)
     avatar_Main_Img = models.ImageField(upload_to="images/")
