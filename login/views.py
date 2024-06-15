@@ -63,12 +63,7 @@ def salir(request):
 
 @login_required
 def usuario_detalle(request):
-    try:
-        usuario = Usuario.objects.get(username=request.user.username)
-        print(usuario)
-    except Usuario.DoesNotExist:
-        usuario = None
-
+    usuario = request.user
     return render(request, 'login/usuario.html', {'usuario': usuario})
 
 @login_required
