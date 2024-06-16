@@ -1,4 +1,10 @@
 {% extends './template.html' %}
+
 {% block content %}
     <h1 class="text-center ">PRINCIPAL</h1>
+    {% if user.is_authenticated %}
+    <h2>Pantalla principal</h2>
+        {% else %}
+        <h2>Primero debes iniciar sesion</h2>
+    {% endif %}
 {% endblock content %}
