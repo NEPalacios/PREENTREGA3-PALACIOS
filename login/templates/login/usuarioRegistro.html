@@ -53,12 +53,10 @@
         <h2 class="register-title">Registro de Usuario</h2>
         <form class="register-form" action="" method="post">
             {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Registrarse">
+            {{form.as_p}}
+            <button class="btn btn-warning" type="submit">Registrarse</button>
             {% if error %}
-            <div class="error-message">
-                <h3>{{ error }}</h3>
-            </div>
+                <h3>{{error}}</h3>
             {% endif %}
         </form>
     </div>
