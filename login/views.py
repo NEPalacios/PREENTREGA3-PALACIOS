@@ -35,12 +35,17 @@ def registro(request):
             username = form.cleaned_data['username']
             email = form.cleaned_data['email']
             password = form.cleaned_data['password1']
-            User.objects.create_user(username=username, email=email, password=password)
+            nombre = form.cleaned_data['nombre']
+            apellido = form.cleaned_data['apellido']
+            user = User.objects.create_user(username=username, email=email, password=password)
+            user.nombre = nombre
+            user.apellido = apellido
+            user.save()
             return redirect('tienda:index')
     else:
         form = RegistroForm()
+    
     return render(request, 'login/usuarioRegistro.html', {'form': form})
-
 def salir(request):
     logout(request)
     return redirect("tienda:index")
@@ -54,8 +59,7 @@ def usuario_detalle(request):
 
 @login_required
 def usuario_editar(request):
-    usuario = request.user  # Obtener el usuario autenticado directamente
-
+    usuario = request.user 
     if request.method == "POST":
         form = UsuarioForm(request.POST, instance=usuario)
         if form.is_valid():
@@ -66,8 +70,7 @@ def usuario_editar(request):
             messages.error(request, "Error al actualizar el perfil")
     else:
         form = UsuarioForm(instance=usuario)
-
-    return render(request, "login/editarUsuario.html", {"form": form})
+    return render(request, "login/usuarioEditar.html", {"form": form})
 
 
 def password_editar(request):

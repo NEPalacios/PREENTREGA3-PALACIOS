@@ -7,6 +7,8 @@ class RegistroForm(forms.Form):
     email = forms.EmailField(label='Correo electrónico')
     password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Confirmar contraseña', widget=forms.PasswordInput)
+    nombre = forms.CharField(label='Nombre', max_length=30)
+    apellido = forms.CharField(label='Apellido', max_length=30)
 
     def clean_username(self):
         username = self.cleaned_data['username']
