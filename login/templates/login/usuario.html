@@ -17,8 +17,10 @@
     <div>
         <br>
         <span class="form-control-color text-black-50">Datos personales:</span>
-        <p>Nombres: {{ usuario.nombres }}</p>
-        <p>Apellido: {{ usuario.apellido }}</p>
+        <h2>Detalles de Usuario</h2>
+        <p>Nombre de usuario: {{ usuario.username }}</p>
+        <p>Correo electrónico: {{ usuario.email }}</p>
+        <p>Fecha de registro: {{ usuario.date_joined }}</p>
         <a href="{% url 'login:usuario_editar' %}" class="btn btn-warning">Editar Perfil</a>
     </div>
 </div>

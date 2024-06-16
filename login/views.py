@@ -1,55 +1,45 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .forms import UsuarioForm, PasswordForm, AvatarForm
+from .forms import UsuarioForm, PasswordForm, AvatarForm, RegistroForm
 from .models import Usuario
 
 
 def iniciar(request):
-    if request.method == "GET":
-        return render(request, "login/iniciar.html", {"form": AuthenticationForm()})
+    if request.method == "POST":
+        form = AuthenticationForm(request, request.POST)
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect("tienda:index")
+        return render(
+            request,
+            "login/iniciar.html",
+            {"form": form, "error": "Nombre de usuario o contraseña incorrectos"},
+        )
     else:
-        name = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(username=name, password=password)
-        if user is None:
-            return render(
-                request,
-                "login/iniciar.html",
-                {
-                    "form": AuthenticationForm(),
-                    "error": "Nombre de usuario o contraseña incorrectos",
-                },
-            )
-        else:
-            login(request, user)
-            return redirect("tienda:index")
+        form = AuthenticationForm()
+        return render(request, "login/iniciar.html", {"form": form})
 
 
 def registro(request):
-    if request.method == "GET":
-        return render(request, "login/usuarioRegistro.html", {"form": UserCreationForm})
+    if request.method == 'POST':
+        form = RegistroForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password1']
+            User.objects.create_user(username=username, email=email, password=password)
+            return redirect('tienda:index')
     else:
-        if request.POST["password1"] != request.POST["password2"]:
-            return render(
-                request,
-                "login/usuarioRegistro.html",
-                {"form": UserCreationForm, "error": "Las contraseñas no coinciden"},
-            )
-        else:
-            name = request.POST["username"]
-            password = request.POST["password1"]
-            user = User.objects.create_user(username=name, password=password)
-            user.save()
-            return render(
-                request,
-                "login/usuarioRegistro.html",
-                {"form": UserCreationForm, "error": "Usuario registrado"},
-            )
-
+        form = RegistroForm()
+    return render(request, 'login/usuarioRegistro.html', {'form': form})
 
 def salir(request):
     logout(request)
@@ -64,16 +54,10 @@ def usuario_detalle(request):
 
 @login_required
 def usuario_editar(request):
-    try:
-        usuario = Usuario.objects.get(username=request.user.username)
-        print(request)
-        # print(usuario)
-    except Usuario.DoesNotExist:
-        usuario = None
+    usuario = request.user  # Obtener el usuario autenticado directamente
 
     if request.method == "POST":
         form = UsuarioForm(request.POST, instance=usuario)
-        print(form)
         if form.is_valid():
             form.save()
             messages.success(request, "Perfil actualizado con éxito")
