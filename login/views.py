@@ -3,30 +3,33 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
+from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
-from .forms import UsuarioForm, PasswordForm, AvatarForm, RegistroForm
+from .forms import UsuarioForm, PasswordForm, AvatarForm, RegistroForm, CustomAuthenticationForm
 from .models import Usuario
 
 
-def iniciar(request):
-    if request.method == "POST":
-        form = AuthenticationForm(request, request.POST)
-        if form.is_valid():
-            username = form.cleaned_data["username"]
-            password = form.cleaned_data["password"]
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect("tienda:index")
-        return render(
-            request,
-            "login/iniciar.html",
-            {"form": form, "error": "Nombre de usuario o contraseña incorrectos"},
-        )
-    else:
-        form = AuthenticationForm()
-        return render(request, "login/iniciar.html", {"form": form})
-
+# def iniciar(request):
+#     if request.method == "POST":
+#         form = AuthenticationForm(request, request.POST)
+#         if form.is_valid():
+#             username = form.cleaned_data["username"]
+#             password = form.cleaned_data["password"]
+#             user = authenticate(username=username, password=password)
+#             if user is not None:
+#                 login(request, user)
+#                 return redirect("tienda:index")
+#         return render(
+#             request,
+#             "login/iniciar.html",
+#             {"form": form, "error": "Nombre de usuario o contraseña incorrectos"},
+#         )
+#     else:
+#         form = AuthenticationForm()
+#         return render(request, "login/iniciar.html", {"form": form})
+class CustomLoginView(LoginView):
+    authentication_form=CustomAuthenticationForm
+    template_name="login/iniciar.html"
 
 def registro(request):
     if request.method == 'POST':
@@ -35,20 +38,22 @@ def registro(request):
             username = form.cleaned_data['username']
             email = form.cleaned_data['email']
             password = form.cleaned_data['password1']
-            nombre = form.cleaned_data['nombre']
-            apellido = form.cleaned_data['apellido']
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
             user = User.objects.create_user(username=username, email=email, password=password)
-            user.nombre = nombre
-            user.apellido = apellido
+            user.first_name = first_name
+            user.last_name = last_name
             user.save()
             return redirect('tienda:index')
     else:
         form = RegistroForm()
     
     return render(request, 'login/usuarioRegistro.html', {'form': form})
+
 def salir(request):
     logout(request)
     return redirect("tienda:index")
+
 
 
 @login_required

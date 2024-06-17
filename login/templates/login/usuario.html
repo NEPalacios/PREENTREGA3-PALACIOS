@@ -11,16 +11,14 @@
 <h2 class="text-center">MI PERFIL</h2>
 
 <div class="w-50 shadow mx-auto p-4 m-3 text-center">
-    <li><strong>Nombre de usuario:</strong> {{ user.username }}</li>
-    <a href="{% url 'login:password_editar' %}" class="btn btn-danger">Cambiar contraseña</a><br>
+    <strong>Nombre de usuario:</strong> {{ user.username }}
+    <br><a href="{% url 'login:password_editar' %}" class="btn btn-danger">Cambiar contraseña</a><br>
 
     <div>
         <br>
-        <h2></h2><span class="form-control-color text-black-50">Datos personales:</span></h2>
+        <h2><span class="form-control-color text-black-50">Datos personales:</span></h2>
         {% if user %}
-        <h3></h3>
         <ul>
-
             <li><strong>Email:</strong> {{ user.email }}</li>
             <li><strong>Nombre:</strong> {{ user.first_name }}</li>
             <li><strong>Apellido:</strong> {{ user.last_name }}</li>

@@ -1,14 +1,13 @@
 from django.urls import path
-from . import views
-from django.contrib import admin
+from . import views 
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import avatar_image_view
+from login.views import CustomLoginView
 
 app_name = "login"
 urlpatterns = [
-    path("iniciar/", views.iniciar, name="iniciar"),
+    path("iniciar/", CustomLoginView.as_view(), name="iniciar"),
     path("registro/", views.registro, name="registro"),
     path("salir/", views.salir, name="salir"),
     # """

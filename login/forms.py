@@ -1,14 +1,22 @@
 from django import forms
 from .models import Usuario, Avatar
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
+
+
+class CustomAuthenticationForm(AuthenticationForm):
+    class Meta:
+        model=User
+        field=["username", "password"]
+
 
 class RegistroForm(forms.Form):
     username = forms.CharField(label='Nombre de usuario', max_length=150)
     email = forms.EmailField(label='Correo electrónico')
     password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Confirmar contraseña', widget=forms.PasswordInput)
-    nombre = forms.CharField(label='Nombre', max_length=30)
-    apellido = forms.CharField(label='Apellido', max_length=30)
+    first_name = forms.CharField(label='Nombres', max_length=30)
+    last_name = forms.CharField(label='Apellido', max_length=30)
 
     def clean_username(self):
         username = self.cleaned_data['username']
@@ -26,7 +34,7 @@ class RegistroForm(forms.Form):
 class UsuarioForm(forms.ModelForm):
     class Meta:
         model = Usuario
-        fields = ["nombres", "apellido"]
+        fields = ["first_name", "last_name", "email"]
         widgets = {
             "password": forms.PasswordInput(),
         }
