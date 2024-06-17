@@ -49,12 +49,15 @@
 </head>
 
 <body>
-    <div class="container register-container">
+    <div class="container register-container text-md-center">
         <h2 class="register-title">Registro de Usuario</h2>
         <form class="register-form" action="" method="post">
             {% csrf_token %}
             {{form.as_p}}
-            <button class="btn btn-warning" type="submit">Registrarse</button>
+            <hr>
+            <button class="btn btn-warning my-1" type="submit">Registrarse</button>
+
+            <button class="btn btn-warning my-2" href="{% url 'tienda:index' %}">Cancelar</button>
             {% if error %}
                 <h3>{{error}}</h3>
             {% endif %}
